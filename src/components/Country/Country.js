@@ -23,7 +23,9 @@ const Country = props => {
 			<div className="Border-block mt-5">
 				<p><strong>Border with:</strong></p>
 				<ul>
-					{props.borders}
+					{!props.borders ? null : props.borders.map((li, index) => (
+						<li key={index}>{li}</li>
+					))}
 				</ul>
 			</div>
 		</div>
