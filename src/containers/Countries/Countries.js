@@ -4,6 +4,8 @@ import Country from "../../components/Country/Country";
 import ListCountry from "../../components/ListCountry/ListCountry";
 import axios from "axios";
 
+import './Countries.css';
+
 const Countries = () => {
 	const [countries, setCountries] = useState([]);
 	const [country, setCountry] = useState({});
@@ -32,26 +34,35 @@ const Countries = () => {
 		getCountries();
 	}, []);
 
-
-	const printInfo = e => {
+	const printInfo = (e) => {
 		const text = e.target.textContent;
 		// console.log(text)
-		countries.forEach(item => {
+		countries.forEach( async (item) => {
 			if (text === item.name) {
+				const borders = [];
+
+				for (let i = 0; i < item.borders.length; i++) {
+					await axios.get('/alpha/' + item.borders[i])
+						.then(response => {
+							const url = response.data.name;
+							borders.push(url);
+						})
+				}
+
 					setCountry({
 						name: item.name,
 						capital: item.capital,
 						population: item.population,
 						region: item.region,
 						flag: item.flag,
-						borders: item.borders,
+						borders,
 						cioc: item.cioc
 					});
 			}
 		})
 	};
 
-	console.log(country.borders);
+	// console.log(country.borders);
 
 	return (
 		<>
@@ -59,7 +70,7 @@ const Countries = () => {
 				<div className="row align-items-start">
 					<div className="col-12 col-lg-4">
 						<div className="ListCountries">
-							<ul>
+							<ul className="pt-2 pb-3">
 								{countries.map((country, index) => {
 									return (
 										<ListCountry key={index} country={country.name} printInfo={printInfo}/>
@@ -75,6 +86,7 @@ const Countries = () => {
 							population={country.population}
 							image={country.flag}
 							cioc={country.cioc}
+							borders={country.borders}
 						/>
 					</div>
 				</div>

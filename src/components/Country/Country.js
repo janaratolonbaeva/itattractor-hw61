@@ -4,6 +4,7 @@ import './Country.css';
 
 
 const Country = props => {
+
 	return (
 		<div className="Country">
 			<div className="row align-items-start">
@@ -22,10 +23,7 @@ const Country = props => {
 			<div className="Border-block mt-5">
 				<p><strong>Border with:</strong></p>
 				<ul>
-					<li>Border 1</li>
-					<li>Border 2</li>
-					<li>Border 3</li>
-					<li>Border 4</li>
+					{props.borders}
 				</ul>
 			</div>
 		</div>
